@@ -1,0 +1,52 @@
+.user-container {
+    width: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-avatar {
+    width: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    gap: 1rem;
+}
+
+.user-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: .4rem;
+}
+
+.header-title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: .4rem;
+
+    & > p {
+        color: var(--grey-70);
+    }
+}
+
+.header-search {
+    width: 100%;
+    min-width: 200px;
+    max-width: 500px;
+    position: relative;
+
+    & .head-search-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 1rem;
+        border: none;
+        background-color: transparent;  
+    }
+}
+

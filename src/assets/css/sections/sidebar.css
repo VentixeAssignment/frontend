@@ -1,0 +1,53 @@
+.sidebar {
+    width: 223px;
+    height: 100%;
+    padding: 1rem;
+    border-radius: 14px;
+    grid-column: 1;
+    grid-row: 1 / 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--sidebar-bg);
+    
+    .logo-text {
+        font-size: 24px;
+        font-weight: var(--font-medium);
+        color: var(--secondary-110);
+    }
+
+    .ventixe-logo{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.8rem 2rem;;  
+    }
+
+    .menu {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .menu-group {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1rem;
+            padding: .8rem 2rem;
+            background-color: var(--sidebar-background);
+        }
+
+        .menu-item {
+            font-size: 14px;
+            font-weight: var(--menu-items-weight);
+            color: var(--menu-items-text-color);
+        }
+    }
+}
+
+

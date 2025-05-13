@@ -1,0 +1,42 @@
+.btn-notification,
+.btn-settings {
+    width: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--btn-header-bg);
+    color: var(--btn-header-text-color);
+    border: none;   
+    transition: all .15s ease-in-out;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: var(--secondary-70);
+    }
+}
+
+.btn-signout {
+    width: 100%;
+    padding: 1rem 2rem;
+    border-radius: 14px;
+    background-color: var(--btn-signout-bg);
+    border: none;   
+    transition: all .15s ease-in-out;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.3rem;
+    font-size: 14px;
+    
+    &:hover {
+        background-color: var(--btn-signout-bg-hover);
+    }
+
+    .btn-signout-text {
+        font-size: 14px;
+        color: var(--secondary-100);
+    }
+}

@@ -1,0 +1,72 @@
+:root {
+    --primary-100: #F26CF9;
+    --primary-90: #F589FA;
+    --primary-50: #FCD3FE;
+    --primary-40: #FCE2FE;
+    --primary-30: #FDEDFE;
+
+    --secondary-110: #1C2346;
+    --secondary-100: #37437D;
+    --secondary-90: #5562A2;
+    --secondary-70: #707DBF;
+    --secondary-60: #ABB4DD;
+    --secondary-50: #D3DAF9;
+
+    --yellow-100: #FFCA39;
+    --yellow-90: #FFEFC3;
+
+    --grey-100: #1E1E20;
+    --grey-90: #434345;
+    --grey-80: #636365;
+    --grey-70: #777779;
+    --grey-60: #9F9FA1;
+    --grey-50: #C3C3C4;
+    --grey-40: #E0E0E1;
+    --grey-30: #EDEDED;
+    --grey-20: #F7F7F7;
+    --grey-10: #FFFFFF;
+
+    --cool-grey-100: #131314;
+    --cool-grey-90: #39393D;
+    --cool-grey-80: #56565C;
+    --cool-grey-70: #72737A;
+    --cool-grey-60: #8F8F99;
+    --cool-grey-50: #B0B1BD;
+    --cool-grey-40: #D1D2E0;
+    --cool-grey-30: #DDDEED;
+    --cool-grey-20: #E4E5F5;
+    --cool-grey-10: #EEEFFF;
+
+    --header-bg: var(--grey-20);
+    --footer-bg: var(--grey-20);
+
+    --sidebar-bg: var(--cool-grey-10);
+    --sidebar-text-color: var(--secondary-100);
+    --sidebar-text-color-active: var(--primary-100);
+
+    --btn-standard-bg: var(--primary-100);
+    --btn-standard-bg-hover: var(--primary-90);
+    --btn-standard-text-color: var(--grey-10);
+
+    --btn-signout-bg: var(--cool-grey-20);
+    --btn-signout-bg-hover: var(--cool-grey-30);
+
+    --btn-standard-active-bg: var(--cool-grey-10);
+    --btn-standard-active-text-color: var(--secondary-100);
+
+    --icons-circle-bg: var(--primary-100);
+    --icons-circle-text-color: var(--grey-10);
+
+    --btn-header-bg: var(--secondary-100);
+    --btn-header-text-color: var(--grey-10);
+
+    --input-bg: var(--grey-10);
+    --input-border: var(--grey-40);
+    --input-placeholder-color: var(--grey-60);
+
+    --menu-items-text-color: var(--secondary-100);
+    --menu-items-weight: var(--font-regular);
+    --menu-items-text-color-active: var(--primary-100);
+
+    --card-bg: var(--grey-10);
+}
