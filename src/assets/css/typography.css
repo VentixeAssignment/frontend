@@ -1,0 +1,62 @@
+:root {
+    --font-family: 'Inter', sans-serif;
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: var(--font-semibold);
+    color: var(--secondary-100);
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: var(--font-semibold);
+    color: var(--grey-100);
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: var(--font-semibold);
+    color: var(--grey-100);
+}
+
+p {
+    font-size: 12px;
+    font-weight: var(--font-regular);
+    color: var(--grey-90);
+}
+
+strong {
+    font-size: 14px;
+    font-weight: var(--font-semibold);
+    color: var(--secondary-110);
+}
+
+small {
+    font-size: 11px;
+    font-weight: var(--font-regular);
+    color: var(--grey-70);
+}
+
+a {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: var(--font-regular);
+    color: var(--grey-70);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active, 
+a:focus {
+    color: var(--primary-100);
+}
+
+
+
