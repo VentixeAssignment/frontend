@@ -4,6 +4,7 @@ import Sidebar from '../partials/Sidebar'
 import Footer from '../partials/Footer'
 import EventsOverview from '../pages/EventsOverview'
 import EventDetails from '../pages/EventDetails'
+import { Outlet } from 'react-router-dom'
 
 const MainLayout = () => {
   return (
@@ -11,9 +12,8 @@ const MainLayout = () => {
         <div className="wrapper">
             <Header />
             <Sidebar />
-            <EventDetails />
-
-            {/* <EventsOverview /> */}
+            
+            <Outlet />
 
             <Footer />
         </div>

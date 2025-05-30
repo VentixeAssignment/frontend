@@ -1,58 +1,121 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+
 import { PiCalendarDot } from "react-icons/pi";
 import { FiMapPin } from "react-icons/fi";
 import { LuDollarSign } from "react-icons/lu";
 
 
 const EventDetails = () => {
+
+  const { id } = useParams();
+
+  const [event, setEvent] = useState(null);
+
+  useEffect(() => {
+    const fetchEventDetails = async (eventId) => {
+      try 
+      {
+        const response = await fetch(`https://localhost:7157/api/events/event${eventId}`);
+        if (!response.ok) {
+          console.error("Failed to fetch event details:", response.statusText);
+          return;
+        }
+        const data = await response.json();
+        console.log("Event details fetched successfully:", data);
+        setEvent(data.data);
+      } 
+      catch (error) 
+      {
+        console.error("Error fetching event details:", error);
+      }
+    }
+
+    fetchEventDetails(id);
+  }, [id]);
+
+  let formattedStartDate = '';
+  let formattedStartTime = '';
+  let formattedEndDate = '';
+  let formattedEndTime = '';
+
+  if (event) {
+    const startDate = new Date(event.start);
+    formattedStartDate = startDate.toLocaleDateString('sv-SE', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+    formattedStartTime = startDate.toLocaleTimeString('sv-SE', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    const endDate = new Date(event.end);
+    formattedEndDate = endDate.toLocaleDateString('sv-SE', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+    formattedEndTime = endDate.toLocaleTimeString('sv-SE', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
   return (
     <div className="main-container">
       <div className="event-details-content">        
 
-        <div className="head-content"> 
-          <img className="event-image-large" src="src/assets/images/avatar.webp" />
+      { event 
+        ? (
+          <div className="head-content"> 
+            <img className="event-image-large" src={`https://localhost:7157${event.eventImageUrl}`} />
 
-          <div className="event-details">
-            <h2>Event Title</h2>
+            <div className="event-details">
+              <h2>{event.eventName}</h2>
 
-            <div className="specifics">
-              <span className="details">
-                <FiMapPin size="16px" color="#C3C3C4" />
-                <span className="event-date">Datum och tid</span>
-              </span>
+              <div className="specifics">
+                <span className="details">
+                  <FiMapPin size="16px" color="#C3C3C4" />
+                  <span className="event-date">{formattedStartDate} kl {formattedStartTime} - {formattedEndDate} kl {formattedEndTime}</span>
+                </span>
 
-              <span className="details">
-                <PiCalendarDot size="16px" color="#C3C3C4" />
-                <span className="event-seats">Location</span>
-              </span>
+                <span className="details">
+                  <PiCalendarDot size="16px" color="#C3C3C4" />
+                  <span className="event-seats">{event.venue}, {event.city}, {event.country}</span>
+                </span>
+              </div>
+
+              <div className="seat-details">
+                <p className="event-seats">Seats left</p>
+                <h3>{event.seatsLeft}</h3>
+              </div>
+
+              <div className="price-details">
+                <p className="event-date">Price per seat</p>
+                <span className="price">
+                  <LuDollarSign size="23px" color="#F26CF9" style={{ strokeWidth: 3 }} />
+                  {event.price}
+                </span>
+              </div>
             </div>
 
-            <div className="seat-details">
-              <p className="event-seats">Seats left</p>
-              <h3>115</h3>
-            </div>
+            <div className="line"></div>
 
-            <div className="price-details">
-              <p className="event-date">Price per seat</p>
-              <span className="price">
-                <LuDollarSign size="23px" color="#F26CF9" style={{ strokeWidth: 3 }} />
-                60
-              </span>
-            </div>
+            <div className="about">
+              <h5 className="about-title">About {event.eventName}</h5>
+              <p className="event-description">
+                  {event.description}
+              </p>
+              <button type="button" className="btn-booking">Boka nu</button>
+            </div>    
+            
           </div>
+        )
+      : ( <h3>Loading events...</h3> )}
 
-          <div className="line"></div>
-
-          <div className="about">
-            <h5 className="about-title">About Event</h5>
-            <p className="event-description">
-                This is a brief description of the event. It provides an overview of what attendees can expect.
-            </p>
-            <button type="button" className="btn-booking">Boka nu</button>
-          </div>          
-        </div>
-
-        <section class="terms-and-conditions">
+        <section className="terms-and-conditions">
           <h3>Terms & Conditions</h3>
 
           <ol>

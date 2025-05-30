@@ -5,14 +5,16 @@ import { PiCalendarDot,
 
 import { LuDollarSign } from "react-icons/lu";
 import { FiMapPin } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 
 const EventCard = () => {
-const [events, setEvents] = useState([]);
 
+const [events, setEvents] = useState([]);
+const navigate = useNavigate();
 useEffect(() => {
     fetchEvents();
 }, [])
@@ -41,6 +43,10 @@ const fetchEvents = async () => {
     }
 }
 
+const handleClick = (id) => {
+    navigate(`event-details/${id}`);
+}
+
   return (
     <ul className="event-list">
         {events.length === 0 
@@ -62,7 +68,7 @@ const fetchEvents = async () => {
                 });
 
                 return (
-                <li key={event.id}>            
+                <li className="event-list-item" key={event.id} onClick={() => handleClick(event.id)}>            
                     <div className="event-card">    
                         <img src={`https://localhost:7157${event.eventImageUrl}`} className="event-img-mini" alt={event.eventName} />
                         
