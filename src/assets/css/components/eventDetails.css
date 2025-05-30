@@ -1,0 +1,152 @@
+.event-details-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    
+    .head-content,
+    .terms-and-conditions {
+        width: 100%;
+        background-color: var(--grey-10);;
+        border-radius: 14px;
+
+        .event-image-large {
+            width: 100%;
+            height: 250px;
+            border-radius: 14px 14px 0 0;
+            object-fit: cover;
+        }
+
+        .event-details {
+            width: 100%;
+            padding: 1.5rem;
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 1fr auto auto;
+            grid-template-rows: auto auto;
+            grid-template-areas: 
+                "title title title"
+                "specifics seats price";
+        
+            & h2 {
+                grid-area: title;
+                margin-bottom: 0.5rem;
+            }
+
+            & .specifics {
+                grid-area: specifics;
+                display: flex;
+                flex-direction: column;
+                gap: 0.7rem;
+
+                span {
+                    font-size: 12px;
+                    font-weight: var(--font-regular);
+                    color: var(--grey-70);
+                }
+
+                .details {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 1rem;
+                }
+            }
+
+            .seat-details,
+            .price-details {
+                width: fit-content;
+                display: flex;
+                flex-direction: column;
+                justify-content: flext-start;
+                align-items: center;
+                gap: .5rem;
+                margin-left: 1rem;
+
+                & p {
+                    font-size: 14px;
+                    font-weight: var(--font-regular);
+                    color: var(--grey-70);
+                }
+            }
+
+            .price {
+                display: flex;
+                align-items: flex-start;
+                font-size: 22px;
+                font-weight: var(--font-semibold);
+                color: var(--primary-100);
+            }
+        }
+
+        .line {
+            margin-inline: 1.5rem;
+            border: 1px solid var(--grey-20);
+        }
+
+        .about {
+            width: 100%;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-rows:  auto 1fr;
+            grid-template-areas: 
+                "title btn"
+                "description btn";
+            gap: 1rem;
+
+            .about-title {
+                grid-area: title;
+            }
+
+            .event-description {
+                grid-area: description;
+            }
+
+            .btn-booking {
+                grid-area: btn;
+                border-radius: 14px;
+                border: none;
+                background-color: var(--btn-standard-bg);
+                padding: 1rem 2rem;
+                color: var(--btn-standard-text-color);
+                cursor: pointer;
+                transition: all .2s ease-in-out;
+
+                &:hover {
+                    background-color: var(--btn-standard-bg-hover);
+                }
+            }
+        }
+    }
+
+    .terms-and-conditions {
+        padding: 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        & ol {
+            margin-left: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        & .terms-list {
+            list-style-type: disc;
+            list-style-position: inside;
+            padding-top: 1rem;
+        }
+
+        & .term-items {
+            padding-bottom: .7rem;
+            font-size: 12px;
+            font-weight: var(--font-regular);
+            color: var(--grey-90);
+        }
+    }
+}

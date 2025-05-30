@@ -13,15 +13,33 @@ h1 {
 }
 
 h2 {
-    font-size: 16px;
+    font-size: 24px;
     font-weight: var(--font-semibold);
     color: var(--grey-100);
 }
 
 h3 {
+    font-size: 16px;
+    font-weight: var(--font-semibold);
+    color: var(--grey-100);
+}
+
+h4 {
     font-size: 14px;
     font-weight: var(--font-semibold);
     color: var(--grey-100);
+}
+
+h5 {
+    font-size: 12px;
+    font-weight: var(--font-semibold);
+    color: var(--secondary-100);
+}
+
+h6 {
+    font-size: 12px;
+    font-weight: var(--font-semibold);
+    color: var(--grey-90);
 }
 
 p {

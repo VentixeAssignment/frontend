@@ -68,7 +68,7 @@ const fetchEvents = async () => {
                         
                         <div className="event-info">
                             <span className="event-category">{event.categories.map(category => category.categoryName)}</span>
-                            <h2 className="event-title">{event.eventName}</h2>
+                            <h3 className="event-title">{event.eventName}</h3>
                             <p className="event-description">{event.description}</p>
                         </div>
 
@@ -78,7 +78,7 @@ const fetchEvents = async () => {
                                 <span className="event-location">{event.venue}, {event.city}, {event.country}</span>
                             </div>
 
-                            <div className="event-location-details">
+                            <div className="event-date-details">
                                 <PiCalendarDot size="16px" color="#C3C3C4" />
                                 <span className="event-date">{`${formattedDate} - ${formattedTime}`}</span>
                             </div>
