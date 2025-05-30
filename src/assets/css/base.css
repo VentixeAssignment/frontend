@@ -1,3 +1,5 @@
+
+
 * {
     margin: 0;
     padding: 0;
@@ -34,7 +36,7 @@ ul {
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: var(--sidebar-width) 1fr;
     grid-template-rows: auto 1fr auto;
     grid-template-areas: "sidebar header"
                          "sidebar main"
@@ -43,7 +45,7 @@ ul {
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .header {
@@ -59,18 +61,6 @@ ul {
     gap: 1rem;
 }
 
-.sidebar {
-    grid-area: sidebar;
-    width: 223px;
-    height: 100%;
-    padding: 1rem;
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--sidebar-background);
-}
 
 .main-container {
     grid-area: main;
@@ -78,9 +68,10 @@ ul {
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 2rem 1.5rem;
     border-radius: 14px;
-    background-color: var(--main-container-background);
+    background-color: var(--main-container-bg);
 }
 
 .footer {

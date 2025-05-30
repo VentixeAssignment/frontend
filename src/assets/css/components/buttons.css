@@ -1,5 +1,6 @@
 .btn-notification,
-.btn-settings {
+.btn-settings,
+.btn-filter {
     width: 40px;
     aspect-ratio: 1;
     border-radius: 50%;
