@@ -97,7 +97,7 @@
     }
 
         .event-info {
-        max-width: 50%;
+        max-width: 500px;
         display: grid;
         grid-template-rows: auto auto 1fr;
         overflow: hidden;
