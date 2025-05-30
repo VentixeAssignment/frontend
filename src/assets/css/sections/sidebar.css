@@ -1,6 +1,10 @@
+:root {
+    --sidebar-width: 223px;
+}
+
 .sidebar {
-    width: 223px;
-    height: 100%;
+    width: var(--sidebar-width);
+    height: calc(100% - 2rem);
     padding: 1rem;
     border-radius: 14px;
     grid-column: 1;
@@ -10,6 +14,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: var(--sidebar-bg);
+    position: fixed;
     
     .logo-text {
         font-size: 24px;

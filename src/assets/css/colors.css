@@ -44,6 +44,8 @@
     --sidebar-text-color: var(--secondary-100);
     --sidebar-text-color-active: var(--primary-100);
 
+    --main-container-bg: var(--grey-20);
+
     --btn-standard-bg: var(--primary-100);
     --btn-standard-bg-hover: var(--primary-90);
     --btn-standard-text-color: var(--grey-10);
