@@ -20,7 +20,7 @@ const Sidebar = () => {
   return (
     <aside className="sidebar">
         <div className="ventixe-logo">
-            <img src="./src/assets/images/ventixe-logo.svg" alt="Ventixe logo" className="logo" />
+            <img src="/src/assets/images/ventixe-logo.svg" alt="Ventixe logo" className="logo" />
             <span className="logo-text">Ventixe</span>
         </div>
         

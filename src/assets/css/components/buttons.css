@@ -1,6 +1,7 @@
 .btn-notification,
 .btn-settings,
-.btn-filter {
+.btn-filter,
+.btn-close {
     width: 40px;
     aspect-ratio: 1;
     border-radius: 50%;
@@ -10,6 +11,7 @@
     background-color: var(--btn-header-bg);
     color: var(--btn-header-text-color);
     border: none;   
+    outline: none;
     transition: all .15s ease-in-out;
     cursor: pointer;
     
@@ -18,7 +20,8 @@
     }
 }
 
-.btn-signout {
+.btn-signout,
+.btn-submit {
     width: 100%;
     padding: 1rem 2rem;
     border-radius: 14px;
