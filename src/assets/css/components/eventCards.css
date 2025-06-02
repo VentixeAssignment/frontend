@@ -137,7 +137,8 @@
         gap: 1.5rem;
         margin-right: 2rem;
 
-        .event-location-details {
+        .event-location-details,
+        .event-date-details {
             width: 100%;
             display: flex;
             gap: 0.5rem;
