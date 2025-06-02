@@ -105,6 +105,7 @@
             .event-description {
                 grid-area: description;
                 margin-right: 15rem;
+                line-height: 1.5rem;
             }
 
             .btn-booking {
@@ -119,6 +120,16 @@
 
                 &:hover {
                     background-color: var(--btn-standard-bg-hover);
+                }
+            }
+
+            .disabled {
+                background-color: var(--grey-30);
+                color: var(--grey-60);
+                cursor: not-allowed;
+
+                &:hover {
+                    background-color: var(--grey-30);
                 }
             }
         }

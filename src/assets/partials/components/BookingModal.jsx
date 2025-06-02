@@ -192,7 +192,8 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
                     <span className="checkmark">
                         <IoCheckmarkSharp size="23px" color="#ffffff" />
                     </span>
-                    Terms and Conditions
+                    <span>I accept the </span>
+                    <p>Terms and Conditions</p>
                 </label>                
 
                 <button type="submit" className="btn-submit">Confirm Booking</button>
