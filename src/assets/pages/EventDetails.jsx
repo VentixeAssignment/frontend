@@ -118,7 +118,14 @@ const EventDetails = () => {
                 <p className="event-description">
                     {event.description}
                 </p>
-                <button type="button" className="btn-booking" onClick={() => setOpenModal(true)}>Boka nu</button>
+                
+                {(event.seatsLeft <= 0) ? (
+                  <button type="button" className="btn-booking disabled" disabled onClick={() => setOpenModal(true)}>Book Now</button>
+                ) : (
+                  <button type="button" className="btn-booking" onClick={() => setOpenModal(true)}>Book now</button>
+                )}
+
+              
               </div>    
               
             </div>

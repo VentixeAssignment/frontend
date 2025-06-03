@@ -16,6 +16,18 @@ dialog.modal {
     padding: 1.5rem;
     margin: auto;
 
+    .btn-submit,
+    .btn-return {
+            background-color: var(--btn-standard-bg);
+            color: var(--btn-standard-text-color);
+            font-weight: var(--font-semibold);
+            margin-top: 1rem;
+
+            &:hover {
+                background-color: var(--btn-standard-bg-hover);
+            }
+        }
+
     p {
         font-size: 14px;
         color: var(--secondary-100);
@@ -161,18 +173,35 @@ dialog.modal {
                 height: 12px;
             }
 
-        }
+        }        
+    }
 
-        .btn-submit {
-            background-color: var(--btn-standard-bg);
-            color: var(--btn-standard-text-color);
-            font-weight: var(--font-semibold);
-            margin-top: 1rem;
+    .booking-confirmation {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
 
-            &:hover {
-                background-color: var(--btn-standard-bg-hover);
+        .price-per-ticket,
+        .tickets,
+        .total-price {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--primary-100);
+            font-weight: var(--font-regular);
+        
+            p {
+                font-size: 14px;
+                color: var(--grey-70);
+                font-weight: var(--font-semibold);
+                margin-right: .5rem;
             }
         }
+
+        
     }
 }
 

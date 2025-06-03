@@ -2,12 +2,29 @@ import React from 'react'
 import { BsSearch } from "react-icons/bs";
 import { IoSettingsOutline } from "react-icons/io5";
 import { PiBell } from "react-icons/pi";
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
+
+    const location = useLocation();
+
+    const title = (pathname) => {
+        switch (pathname) {
+            case "/":
+            case '/events':
+                return 'Events Overview';
+            case '/bookings':
+                return 'Bookings Overview';
+            default:
+                return 'Events Overview';
+        }
+    }
+
+
   return (
     <header className="header">
         <div className="header-title">
-            <h1>Dashboard</h1>
+            <h1>{title(location.pathname)}</h1>
             <p>Hello Orlando, welcome back!</p>
         </div>
         <div className="header-search">
