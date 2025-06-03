@@ -21,7 +21,8 @@
 }
 
 .btn-signout,
-.btn-submit {
+.btn-submit,
+.btn-return {
     width: 100%;
     padding: 1rem 2rem;
     border-radius: 14px;
