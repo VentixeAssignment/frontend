@@ -13,6 +13,7 @@ import { PiInvoice,
         PiCurrencyCircleDollar ,
         PiImages,
         } from "react-icons/pi";
+import { NavLink } from 'react-router-dom';
 
 
         
@@ -26,15 +27,23 @@ const Sidebar = () => {
         
         <nav className="menu">
             <ul >
-                <li className="menu-group">
+                {/* <li className="menu-group">
                     <BsGrid size="19" color="#37437D"/>
                     <a href="#" className="menu-item">Dashboard</a>
+                </li> */}
+                <li className="menu-group">
+                    <PiTicket size="20" color="#37437D"/>
+                    <NavLink to="/" className="menu-item">
+                        Events
+                    </NavLink>
                 </li>
                 <li className="menu-group">
                     <GoCheckbox size="19" color="#37437D"/>
-                    <a href="#" className="menu-item">Bookings</a>
+                    <NavLink to="/" className="menu-item">
+                        Bookings
+                    </NavLink>
                 </li>
-                <li className="menu-group">
+                {/* <li className="menu-group">
                     <PiInvoice size="21" color="#37437D"/>
                     <a href="#" className="menu-item">Invoice</a>
                 </li>
@@ -45,12 +54,8 @@ const Sidebar = () => {
                 <li className="menu-group">
                     <PiCalendarDots size="20" color="#37437D"/>
                     <a href="#" className="menu-item">Calendar</a>
-                </li>
-                <li className="menu-group">
-                    <PiTicket size="20" color="#37437D"/>
-                    <a href="#" className="menu-item">Events</a>
-                </li>
-                <li className="menu-group">
+                </li> */}
+                {/* <li className="menu-group">
                     <PiCurrencyCircleDollar size="21" color="#37437D"/>
                     <a href="#" className="menu-item">Financials</a>
                 </li>
@@ -61,7 +66,7 @@ const Sidebar = () => {
                 <li className="menu-group">
                     <BsStar size="20" color="#37437D"/>
                     <a href="#" className="menu-item">Feedback</a>
-                </li>
+                </li> */}
             </ul>
         </nav>
 
