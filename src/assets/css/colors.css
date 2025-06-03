@@ -68,6 +68,8 @@
 
     --menu-items-text-color: var(--secondary-100);
     --menu-items-weight: var(--font-regular);
+    --menu-items-text-color-hover: var(--primary-100);
+    --menu-items-hover-weight: var(--font-semibold);
     --menu-items-text-color-active: var(--primary-100);
 
     --card-bg: var(--grey-10);

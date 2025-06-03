@@ -20,10 +20,10 @@ import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
   return (
     <aside className="sidebar">
-        <div className="ventixe-logo">
+        <NavLink to="/" className="ventixe-logo">
             <img src="/src/assets/images/ventixe-logo.svg" alt="Ventixe logo" className="logo" />
             <span className="logo-text">Ventixe</span>
-        </div>
+        </NavLink>
         
         <nav className="menu">
             <ul >
@@ -32,13 +32,13 @@ const Sidebar = () => {
                     <a href="#" className="menu-item">Dashboard</a>
                 </li> */}
                 <li className="menu-group">
-                    <PiTicket size="20" color="#37437D"/>
+                    <PiTicket className="menu-item" size="20" />
                     <NavLink to="/" className="menu-item">
                         Events
                     </NavLink>
                 </li>
                 <li className="menu-group">
-                    <GoCheckbox size="19" color="#37437D"/>
+                    <GoCheckbox className="menu-item" size="19" />
                     <NavLink to="/" className="menu-item">
                         Bookings
                     </NavLink>

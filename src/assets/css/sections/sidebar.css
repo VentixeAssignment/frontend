@@ -28,7 +28,8 @@
         justify-content: flex-start;
         align-items: center;
         gap: 1rem;
-        padding: 1.8rem 2rem;;  
+        padding: 1.8rem 2rem;
+        text-decoration: none;
     }
 
     .logo {
@@ -50,12 +51,18 @@
             gap: 1rem;
             padding: .8rem 2rem;
             background-color: var(--sidebar-background);
+            
+            &:hover .menu-item {
+                color: var(--menu-items-text-color-hover);
+                font-weight: var(--menu-items-hover-weight);
+            }
         }
 
         .menu-item {
             font-size: 14px;
             font-weight: var(--menu-items-weight);
             color: var(--menu-items-text-color);
+
         }
     }
 }
