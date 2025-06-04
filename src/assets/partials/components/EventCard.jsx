@@ -26,8 +26,10 @@ const EventCard = () => {
         try {
             const response = await fetch(`${apiUrl}/api/events`);
 
+            console.log("Response from API:", response);
+
             if(!response.ok) {
-                console.error("Something went wrong connection to api to fetch events:", response.statusText);
+                console.error("Something went wrong with connection to api to fetch events:", response.status);
             }
 
             const data = await response.json();
@@ -72,7 +74,7 @@ const EventCard = () => {
                     return (
                     <li className="event-list-item" key={event.id} onClick={() => handleClick(event.id)}>            
                         <div className="event-card">    
-                            <img src={`${eventAzureUrl}${event.eventImageUrl}`} className="event-img-mini" alt={event.eventName} />
+                            <img src={`${apiUrl}${event.eventImageUrl}`} className="event-img-mini" alt={event.eventName} />
                             
                             <div className="event-info">
                                 <span className="event-category">{event.categories.map(category => category.categoryName)}</span>
