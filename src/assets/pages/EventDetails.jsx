@@ -10,6 +10,9 @@ import { LuDollarSign } from "react-icons/lu";
 
 const EventDetails = () => {
 
+  const apiUrl = import.meta.env.VITE_EVENT_API_URL;
+
+
   const { id } = useParams();
 
   const [event, setEvent] = useState(null);
@@ -19,7 +22,7 @@ const EventDetails = () => {
     const fetchEventDetails = async (eventId) => {
       try 
       {
-        const response = await fetch(`https://localhost:7157/api/events/event${eventId}`);
+        const response = await fetch(`${apiUrl}/api/events/event${eventId}`);
         if (!response.ok) {
           console.error("Failed to fetch event details:", response.statusText);
           return;
@@ -80,7 +83,7 @@ const EventDetails = () => {
         { event 
           ? (
             <div className="head-content"> 
-              <img className="event-image-large" src={`https://localhost:7157${event.eventImageUrl}`} />
+              <img className="event-image-large" src={`${eventAzureUrl}${event.eventImageUrl}`} />
 
               <div className="event-details">
                 <h2>{event.eventName}</h2>
@@ -204,7 +207,7 @@ const EventDetails = () => {
         eventId = {id}
         eventName = {event ? event.eventName : 'Loading...'}
         eventPrice = {event ? event.price : 'Loading...'}
-        eventImageUrl = {event ? `https://localhost:7157${event.eventImageUrl}` : '#'}
+        eventImageUrl = {event ? `${apiUrl}${event.eventImageUrl}` : '#'}
         eventVenue = {event ? event.venue : 'Loading...'}
         eventDate = {event ? formattedStartDate : 'Loading...'}
         eventTime = {event ? formattedStartTime : 'Loading...'}

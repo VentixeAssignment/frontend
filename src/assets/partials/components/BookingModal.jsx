@@ -10,6 +10,8 @@ import { FaXmark } from "react-icons/fa6";
 
 const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventImageUrl, eventVenue, eventDate, eventTime }) => {
     
+   const apiUrl = import.meta.env.VITE_BOOKING_API_URL;
+
     if(!isOpen) return null;
 
     const formattedStartDate = eventDate
@@ -88,7 +90,7 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
     const bookEvent = async (booking) => {
         try {
             console.log("Booking event before post:", booking);
-            const response =  await fetch('https://localhost:7084/api/create', {
+            const response =  await fetch(`${apiUrl}/api/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
