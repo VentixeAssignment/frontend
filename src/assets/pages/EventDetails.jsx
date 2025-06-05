@@ -83,7 +83,7 @@ const EventDetails = () => {
         { event 
           ? (
             <div className="head-content"> 
-              <img className="event-image-large" src={`${eventAzureUrl}${event.eventImageUrl}`} />
+              <img className="event-image-large" src={`${apiUrl}${event.eventImageUrl}`} />
 
               <div className="event-details">
                 <h2>{event.eventName}</h2>
