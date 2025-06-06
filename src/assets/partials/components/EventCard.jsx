@@ -15,8 +15,11 @@ const EventCard = () => {
 
     const apiUrl = import.meta.env.VITE_EVENT_API_URL;
 
+    console.log("API URL:", apiUrl);
+
     const [events, setEvents] = useState([]);
     const navigate = useNavigate();
+
     useEffect(() => {
         fetchEvents();
     }, [])
@@ -24,6 +27,8 @@ const EventCard = () => {
 
     const fetchEvents = async () => {
         try {
+            console.log("Fetching started...");
+            
             const response = await fetch(`${apiUrl}/api/events`);
 
             console.log("Response from API:", response);
@@ -43,7 +48,8 @@ const EventCard = () => {
             }
         }
         catch (error) {
-            console.error("Error fetching events:", error);
+            console.error("Fetch failed:", error.message);
+        console.error("Stack:", error.stack);
         }
     }
 

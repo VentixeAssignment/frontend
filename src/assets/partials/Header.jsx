@@ -10,7 +10,6 @@ const Header = () => {
 
     const title = (pathname) => {
         switch (pathname) {
-            case "/":
             case '/events':
                 return 'Events Overview';
             case '/bookings':
