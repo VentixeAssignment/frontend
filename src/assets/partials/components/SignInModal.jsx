@@ -115,6 +115,20 @@ const SignInModal = ({ dialogRef }) => {
 
                 alert("Sign In successful!");
                 setIsLoggedIn(true);
+                setForm({
+                    firstName: "",
+                    lastName: "",
+                    userName: "", 
+                    email: "",
+                    phoneNumber: "",
+                    streetAddress: "",
+                    postalCode: "",
+                    city: "",
+                    dateOfBirth: "",
+                    password: "",
+                    confirmPassword: "",
+                    termsAndConditions: false
+                });
                 dialogRef?.current?.close();
             } else {
                 alert(data.message || "Sign In failed. Please try again.");
@@ -123,12 +137,28 @@ const SignInModal = ({ dialogRef }) => {
         .catch(error => {
             console.error("Error during sign in:", error);
             alert("An error occurred. Please try again later.");
+            setForm({
+                firstName: "",
+                lastName: "",
+                userName: "", 
+                email: "",
+                phoneNumber: "",
+                streetAddress: "",
+                postalCode: "",
+                city: "",
+                dateOfBirth: "",
+                password: "",
+                confirmPassword: "",
+                termsAndConditions: false
+            });
+            dialogRef?.current?.close();
         });
     }
 
 
 // Handles the sign up submit
     const handleSignUp = (e) => {
+        e.preventDefault();
         const { 
             firstName, 
             lastName, 
@@ -143,19 +173,16 @@ const SignInModal = ({ dialogRef }) => {
 
         if (!firstName || !lastName || !email || !phoneNumber || !streetAddress || !postalCode || !city || !dateOfBirth || !password || !confirmPassword) {
             alert("Please fill in all fields.");
-            e.preventDefault();
             return;
         }
 
         if (password !== confirmPassword) {
             alert("Passwords do not match.");
-            e.preventDefault();
             return;
         }
 
         if (!termsAndConditions) {
             alert("You must accept the terms and conditions.");
-            e.preventDefault();
             return;
         }
         console.log("Starting fetch.", Array.from(form));
@@ -185,23 +212,50 @@ const SignInModal = ({ dialogRef }) => {
             console.log("Response received:", data);
             if (!response.ok) {
                 console.error("Response not ok:", data);
-                throw new Error("Network response was not ok");
+                alert(data.message || "Sign Up failed. Please try again.");
             }
             return data;
         })
         .then(data => {
             if (data.success) {
                 alert("Sign Up successful!");
+                setForm({
+                    firstName: "",
+                    lastName: "",
+                    userName: "", 
+                    email: "",
+                    phoneNumber: "",
+                    streetAddress: "",
+                    postalCode: "",
+                    city: "",
+                    dateOfBirth: "",
+                    password: "",
+                    confirmPassword: "",
+                    termsAndConditions: false
+                });
                 dialogRef?.current?.close();
             } else {
                 alert(data.message || "Sign Up failed. Please try again.");
-                e.preventDefault();
             }
         })
         .catch(error => {
             console.error("Error during sign up:", error);
             alert("An error occurred. Please try again later.");
-            e.preventDefault();
+            setForm({
+                firstName: "",
+                lastName: "",
+                userName: "", 
+                email: "",
+                phoneNumber: "",
+                streetAddress: "",
+                postalCode: "",
+                city: "",
+                dateOfBirth: "",
+                password: "",
+                confirmPassword: "",
+                termsAndConditions: false
+            });
+            dialogRef?.current?.close();
         });
     }
 
@@ -216,13 +270,13 @@ const SignInModal = ({ dialogRef }) => {
                     </button>
                 </div>
                 <div className="modal-form">
-                    <form className="signin-form" noValidate>
+                    <form className="signin-form" onSubmit={isSignUp ? handleSignUp : handleSignIn} noValidate>
                         {!isSignUp 
                             ? (
                                 <>
                                     <div className="form-group">
-                                        <label htmlFor="email">Email</label>
-                                        <input type="email" id="email" value={form.userName} name="email" className="input"
+                                        <label htmlFor="userName">Email</label>
+                                        <input type="email" id="userName" value={form.userName} name="userName" className="input"
                                             onChange={(e) => setForm({...form, userName: e.target.value})} required />
                                     </div>
                                     <div className="form-group">
@@ -230,7 +284,7 @@ const SignInModal = ({ dialogRef }) => {
                                         <input type="password" id="password" value={form.password} name="password" className="input" 
                                             onChange={(e) => setForm({...form, password: e.target.value})}required />
                                     </div>
-                                    <button type="submit" className="btn-signin" onClick={handleSignIn}>Sign In</button>
+                                    <button type="submit" className="btn-signin">Sign In</button>
                                 </>
                             )
                             : (
@@ -335,7 +389,7 @@ const SignInModal = ({ dialogRef }) => {
                                         <p>Terms and Conditions</p>
                                     </label>
 
-                                    <button type="submit" className="btn-signup-submit" onClick={handleSignUp}>Sign Up</button>
+                                    <button type="submit" className="btn-signup-submit">Sign Up</button>
                                 </>
                             )}
                     </form>
