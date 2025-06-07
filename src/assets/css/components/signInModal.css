@@ -1,5 +1,35 @@
-dialog.signin-modal {
-    width: 100px;
-    height: 100px;
-    background-color: red;
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+
+    .header-modal {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;        
+    }
+
+    .signin-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+
+        .btn-signin {
+            width: 100%;
+            background-color: var(--btn-standard-bg);
+            color: var(--btn-standard-text-color);
+            font-weight: var(--font-semibold);
+            transition: all .2s ease-in-out;
+
+            &:hover {
+                background-color: var(--btn-standard-bg-hover);
+            }
+        }
+    }
 }

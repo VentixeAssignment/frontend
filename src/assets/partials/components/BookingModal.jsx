@@ -203,7 +203,7 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
                     </span>
                 </div>
 
-                <div className="modal-form">
+                {/* <div className="modal-form"> */}
                     <form className="form" onSubmit={handleSubmit} noValidate>
                         <div className="form-group-double">
                             <div className="form-group">
@@ -249,7 +249,7 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
 
                         <button type="submit" className="btn-submit">Confirm Booking</button>
                     </form>            
-                </div>
+                {/* </div> */}
                 </>
             )}
     </dialog>
