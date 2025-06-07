@@ -20,7 +20,8 @@
         align-items: center;
         gap: 1.5rem;
 
-        .btn-signin {
+        .btn-signin,
+        .btn-signup-submit {
             width: 100%;
             background-color: var(--btn-standard-bg);
             color: var(--btn-standard-text-color);
