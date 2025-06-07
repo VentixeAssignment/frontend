@@ -98,8 +98,8 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
                 body: JSON.stringify(booking)
             });
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error("Error booking event:", errorText);
+                const errorText = await response.json();
+                console.error("Error booking event:", errorText.message);
                 console.error("Failed to book event:", response.status, response.statusText);
               return;
             }
