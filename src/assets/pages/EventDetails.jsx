@@ -201,6 +201,7 @@ const EventDetails = () => {
 
         </div>
       </div>
+
       <BookingModal 
         isOpen = {openModal}
         onClose = {() => setOpenModal(false)}

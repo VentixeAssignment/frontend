@@ -90,7 +90,7 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
     const bookEvent = async (booking) => {
         try {
             console.log("Booking event before post:", booking);
-            const response =  await fetch(`${apiUrl}/api/create`, {
+            const response =  await fetch(`${apiUrl}/api/bookings/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -203,10 +203,10 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
                     </span>
                 </div>
 
-                <div className="booking-form">
+                {/* <div className="modal-form"> */}
                     <form className="form" onSubmit={handleSubmit} noValidate>
                         <div className="form-group-double">
-                        <   div className="form-group">
+                            <div className="form-group">
                                 <label htmlFor="firstName">First Name</label>
                                 <input className="input" type="text" id="firstName" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
                             </div>
@@ -249,7 +249,7 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
 
                         <button type="submit" className="btn-submit">Confirm Booking</button>
                     </form>            
-                </div>
+                {/* </div> */}
                 </>
             )}
     </dialog>

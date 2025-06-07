@@ -21,6 +21,8 @@
 }
 
 .btn-signout,
+.btn-signin,
+.btn-signup-submit,
 .btn-submit,
 .btn-return {
     width: 100%;
@@ -40,8 +42,27 @@
         background-color: var(--btn-signout-bg-hover);
     }
 
-    .btn-signout-text {
+    .btn-signout-text,
+    .btn-signin-text {
         font-size: 14px;
         color: var(--secondary-100);
+    }
+}
+
+.btn-signin {
+    width: 100px;
+}
+
+.btn-signup {
+    border: none;
+    background: transparent;
+    color: var(--secondary-90);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    padding: .5rem;
+
+    &:hover {
+        color: var(--secondary-60);
     }
 }

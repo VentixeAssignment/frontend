@@ -1,6 +1,8 @@
 import React from 'react'
 import { GoCheckbox } from "react-icons/go";
-import { IoLogOutOutline } from "react-icons/io5";
+import { IoLogOutOutline,
+        IoLogInOutline
+        } from "react-icons/io5";
 
 import { BsGrid, 
         BsStar,     
@@ -14,10 +16,48 @@ import { PiInvoice,
         PiImages,
         } from "react-icons/pi";
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../AuthProvider';
 
 
         
-const Sidebar = () => {
+const Sidebar = ({ signInClicked }) => {
+
+    const authApiUrl = import.meta.env.VITE_AUTH_API_URL;
+
+    const { isLoggedIn, user, setIsLoggedIn, setUser } = useAuth();
+
+    const handleSignOut = async () => {
+        const token = localStorage.getItem('authToken');
+        if (!token) return;
+
+        const response = await fetch(`${authApiUrl}/api/auth/signout`, {
+            method: 'POST',     
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if(!response.ok) {
+            console.error("Failed to sign out");
+            return;
+        }
+
+        localStorage.removeItem('authToken');
+        setIsLoggedIn(false);
+        setUser({
+            id: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            profileImageUrl: "",
+            phoneNumber: "",
+            streetAddress: "",
+            postalCode: "",
+            city: "",
+            dateOfBirth: ""
+        });
+    }
+
   return (
     <aside className="sidebar">
         <NavLink to="/" className="ventixe-logo">
@@ -70,10 +110,21 @@ const Sidebar = () => {
             </ul>
         </nav>
 
-        <button type="button" className="btn-signout">
-            <IoLogOutOutline size="20" color="#37437D" /> 
-            <p className="btn-signout-text">Sign Out</p>
-        </button>
+        {isLoggedIn 
+        ? (
+            <button type="button" className="btn-signout" onClick={ handleSignOut }>
+                <IoLogOutOutline size="20" color="#37437D" />
+                <p className="btn-signout-text">Sign Out</p>
+            </button> 
+        )
+        : (
+            <button type="button" className="btn-signout" onClick={ signInClicked }>
+                <IoLogInOutline size="22" color="#37437D" />
+                <p className="btn-signin-text">Sign In</p>
+            </button>
+        )}
+
+        
     </aside>
   )
 }
