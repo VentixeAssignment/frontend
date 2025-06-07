@@ -20,7 +20,10 @@
     }
 }
 
+
+
 .btn-signout,
+.btn-signin,
 .btn-submit,
 .btn-return {
     width: 100%;
@@ -40,8 +43,12 @@
         background-color: var(--btn-signout-bg-hover);
     }
 
-    .btn-signout-text {
+    .btn-signout-text,
+    .btn-signin-text {
         font-size: 14px;
         color: var(--secondary-100);
     }
+}
+.btn-signin {
+    width: 100px;
 }

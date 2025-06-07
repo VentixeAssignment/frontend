@@ -6,6 +6,7 @@ import { BsSearch } from "react-icons/bs";
 import { IoFilter } from "react-icons/io5";
 import { TbChevronDown } from "react-icons/tb";
 import { PiCalendarDot } from "react-icons/pi";
+import SignInModal from '../partials/components/SignInModal';
 
 const EventsOverview = () => {
   return (
@@ -32,6 +33,7 @@ const EventsOverview = () => {
         </div>
 
         <EventCard />
+
     </main>
   )
 }

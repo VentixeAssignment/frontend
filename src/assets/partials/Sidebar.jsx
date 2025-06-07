@@ -1,6 +1,8 @@
 import React from 'react'
 import { GoCheckbox } from "react-icons/go";
-import { IoLogOutOutline } from "react-icons/io5";
+import { IoLogOutOutline,
+        IoLogInOutline
+        } from "react-icons/io5";
 
 import { BsGrid, 
         BsStar,     
@@ -17,7 +19,7 @@ import { NavLink } from 'react-router-dom';
 
 
         
-const Sidebar = () => {
+const Sidebar = ({ signInClicked }) => {
   return (
     <aside className="sidebar">
         <NavLink to="/" className="ventixe-logo">
@@ -70,10 +72,15 @@ const Sidebar = () => {
             </ul>
         </nav>
 
-        <button type="button" className="btn-signout">
-            <IoLogOutOutline size="20" color="#37437D" /> 
-            <p className="btn-signout-text">Sign Out</p>
+        <button type="button" className="btn-signout" onClick={ signInClicked }>
+            <IoLogInOutline size="22" color="#37437D" />
+            <p className="btn-signin-text">Sign In</p>
         </button>
+
+        {/* <button type="button" className="btn-signout">
+            <IoLogOutOutline size="20" color="#37437D" />
+            <p className="btn-signout-text">Sign Out</p>
+        </button> */}
     </aside>
   )
 }

@@ -39,6 +39,7 @@ const Header = () => {
             <button type="button" className="btn-settings">
                 <IoSettingsOutline size="22" color="#FFFFFF" />
             </button>
+           
             <img src="./src/assets/images/avatar.webp" alt="User Avatar" className="user-avatar" />
             <div className="user-name">
                 <strong>Orlando</strong>
