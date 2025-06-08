@@ -294,7 +294,7 @@ const SignInModal = ({ dialogRef }) => {
                                         <input type="password" id="password" value={form.password} name="password" className="input" 
                                             onChange={(e) => setForm({...form, password: e.target.value})}required />
                                     </div>
-                                    <button type="submit" className="btn-signin" onClick={() => setIsCreatedAccount(false)}>Sign In</button>
+                                    <button type="submit" className="btn-signin-submit" onClick={() => setIsCreatedAccount(false)}>Sign In</button>
                                 </>
                             )
                             : (

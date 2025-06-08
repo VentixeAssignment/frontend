@@ -39,6 +39,7 @@
 
 .btn-signout,
 .btn-signin,
+.btn-signin-submit,
 .btn-signup-submit,
 .btn-submit,
 .btn-return {
@@ -86,12 +87,25 @@
 
 .btn-submit,
 .btn-return {
-        background-color: var(--btn-standard-bg);
-        color: var(--btn-standard-text-color);
-        font-weight: var(--font-semibold);
-        margin-top: 1rem;
+    background-color: var(--btn-standard-bg);
+    color: var(--btn-standard-text-color);
+    font-weight: var(--font-semibold);
+    margin-top: 1rem;
 
-        &:hover {
-            background-color: var(--btn-standard-bg-hover);
-        }
+    &:hover {
+        background-color: var(--btn-standard-bg-hover);
     }
+}
+
+.btn-signin-submit,
+.btn-signup-submit {
+    width: 100%;
+    background-color: var(--btn-standard-bg);
+    color: var(--btn-standard-text-color);
+    font-weight: var(--font-semibold);
+    transition: all .2s ease-in-out;
+
+    &:hover {
+        background-color: var(--btn-standard-bg-hover);
+    }
+}

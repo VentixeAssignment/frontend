@@ -24,18 +24,5 @@
         justify-content: center;
         align-items: center;
         gap: 1.5rem;
-
-        .btn-signin,
-        .btn-signup-submit {
-            width: 100%;
-            background-color: var(--btn-standard-bg);
-            color: var(--btn-standard-text-color);
-            font-weight: var(--font-semibold);
-            transition: all .2s ease-in-out;
-
-            &:hover {
-                background-color: var(--btn-standard-bg-hover);
-            }
-        }
     }
 }
