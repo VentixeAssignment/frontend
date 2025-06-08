@@ -108,19 +108,11 @@
                 line-height: 1.5rem;
             }
 
-            .btn-booking {
-                grid-area: btn;
-                border-radius: 14px;
-                border: none;
-                background-color: var(--btn-standard-bg);
-                padding: 1rem 2rem;
+            .btn-booking > p {
+                font-size: 12px;
+                font-weight: var(--font-regular);
                 color: var(--btn-standard-text-color);
-                cursor: pointer;
-                transition: all .2s ease-in-out;
-
-                &:hover {
-                    background-color: var(--btn-standard-bg-hover);
-                }
+                line-height: 1rem;
             }
 
             .disabled {

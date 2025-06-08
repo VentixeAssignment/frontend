@@ -91,12 +91,12 @@ const EventDetails = () => {
                 <div className="specifics">
                   <span className="details">
                     <FiMapPin size="16px" color="#C3C3C4" />
-                    <span className="event-date">{formattedStartDate} kl {formattedStartTime} - {formattedEndDate} kl {formattedEndTime}</span>
+                    <span>{formattedStartDate} kl {formattedStartTime} - {formattedEndDate} kl {formattedEndTime}</span>
                   </span>
 
                   <span className="details">
                     <PiCalendarDot size="16px" color="#C3C3C4" />
-                    <span className="event-seats">{event.venue}, {event.city}, {event.country}</span>
+                    <span>{event.venue}, {event.city}, {event.country}</span>
                   </span>
                 </div>
 
@@ -106,7 +106,7 @@ const EventDetails = () => {
                 </div>
 
                 <div className="price-details">
-                  <p className="event-date">Price per seat</p>
+                  <p className="event-price">Price per seat</p>
                   <span className="price">
                     <LuDollarSign size="23px" color="#F26CF9" style={{ strokeWidth: 3 }} />
                     {event.price}
@@ -123,9 +123,13 @@ const EventDetails = () => {
                 </p>
                 
                 {(event.seatsLeft <= 0) ? (
-                  <button type="button" className="btn-booking disabled" disabled onClick={() => setOpenModal(true)}>Book Now</button>
+                  <button type="button" className="btn-booking disabled" disabled>
+                    <p>Book Now</p>
+                  </button>
                 ) : (
-                  <button type="button" className="btn-booking" onClick={() => setOpenModal(true)}>Book now</button>
+                  <button type="button" className="btn-booking" onClick={() => setOpenModal(true)}>
+                    <p>Book Now</p>
+                  </button>
                 )}
 
               

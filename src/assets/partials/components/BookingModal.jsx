@@ -165,91 +165,91 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
             )
             : (
                 <>
-                <div className="header-modal">
-                    <img src={eventImageUrl} alt={eventName} className="event-img-mini" />
-                    <div className="event-details-modal">
-                        <h2>{eventName}</h2>
-                        
-                        <div className="specifics">
-                            <span className="details">
-                                <FiMapPin size="16px" color="#C3C3C4" style={{marginTop: ".8rem"}} />
-                                <span className="event-date">{formattedStartDate} kl {formattedStartTime}</span>
-                            </span>
+                    <div className="header-modal">
+                        <img src={eventImageUrl} alt={eventName} className="event-img-mini" />
+                        <div className="event-details-modal">
+                            <h2>{eventName}</h2>
+                            
+                            <div className="specifics">
+                                <span className="details">
+                                    <FiMapPin size="16px" color="#C3C3C4" style={{marginTop: ".8rem"}} />
+                                    <span className="event-date">{eventDate} kl {eventTime}</span>
+                                </span>
 
-                            <span className="details">
-                                <PiCalendarDot size="16px" color="#C3C3C4" style={{marginTop: ".8rem"}} />
-                                <span className="event-date">{eventVenue}</span>
-                            </span>
-                        </div>
-                    </div>            
-                    <button className="btn-close" onClick={onClose}>
-                        <FaXmark size="20px" color="#ffffff" />
-                    </button>
-                </div>  
-                <div className="price-details">
-                    <span className="price-per-ticket">
-                        <p>Price per Seat:</p> 
-                        <LuDollarSign size="19px" color="#F26CF9" style={{ strokeWidth: 3 }} />
-                        {eventPrice}
-                    </span>
-                    <span className="tickets">
-                        <p>Tickets:</p>
-                        {seats}
-                    </span>
-                    <span className="total-price">
-                        <p>Total Price:</p> 
-                        <LuDollarSign size="19px" color="#F26CF9" style={{ strokeWidth: 3 }} />
-                        {totalPrice}
-                    </span>
-                </div>
+                                <span className="details">
+                                    <PiCalendarDot size="16px" color="#C3C3C4" style={{marginTop: ".8rem"}} />
+                                    <span className="event-date">{eventVenue}</span>
+                                </span>
+                            </div>
+                        </div>            
+                        <button className="btn-close" onClick={onClose}>
+                            <FaXmark size="20px" color="#ffffff" />
+                        </button>
+                    </div>  
+                    <div className="modal-price-details">
+                        <span className="price-per-ticket">
+                            <p>Price per Seat:</p> 
+                            <LuDollarSign size="19px" color="#F26CF9" style={{ strokeWidth: 3 }} />
+                            {eventPrice}
+                        </span>
+                        <span className="tickets">
+                            <p>Tickets:</p>
+                            {seats}
+                        </span>
+                        <span className="total-price">
+                            <p>Total Price:</p> 
+                            <LuDollarSign size="19px" color="#F26CF9" style={{ strokeWidth: 3 }} />
+                            {totalPrice}
+                        </span>
+                    </div>
 
-                {/* <div className="modal-form"> */}
-                    <form className="form" onSubmit={handleSubmit} noValidate>
-                        <div className="form-group-double">
-                            <div className="form-group">
-                                <label htmlFor="firstName">First Name</label>
-                                <input className="input" type="text" id="firstName" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+                    <div className="modal-form">
+                        <form className="form" onSubmit={handleSubmit} noValidate>
+                            <div className="form-group-multi">
+                                <div className="form-group">
+                                    <label htmlFor="firstName">First Name</label>
+                                    <input className="input" type="text" id="firstName" name="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="lastName">Last Name</label>
+                                    <input className="input" type="text" id="lastName" name="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+                                </div>
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="lastName">Last Name</label>
-                                <input className="input" type="text" id="lastName" name="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input className="input" type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                        </div>
-
-                        <div className="form-group-double">
-                            <div className="form-group">
-                                <label htmlFor="phone">Phone Number</label>
-                                <input className="input" type="text" id="phone" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                <label htmlFor="email">Email</label>
+                                <input className="input" type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="seats">Tickets</label>
-                                <select className="input" id="seats" name="seats" value={seats} onChange={(e) => setSeats(Number(e.target.value))} required>
-                                    {Array.from({ length: 20 }, (_, i) => (
-                                        <option key={i + 1} value={i + 1}>{i + 1}</option>
-                                    ))}
-                                </select>
+                            <div className="form-group-multi">
+                                <div className="form-group">
+                                    <label htmlFor="phone">Phone Number</label>
+                                    <input className="input" type="text" id="phone" name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="seats">Tickets</label>
+                                    <select className="input" id="seats" name="seats" value={seats} onChange={(e) => setSeats(Number(e.target.value))} required>
+                                        {Array.from({ length: 20 }, (_, i) => (
+                                            <option key={i + 1} value={i + 1}>{i + 1}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <label className="form-group-terms" htmlFor="terms">
-                            <input type="checkbox" id="terms" name="terms" checked={terms} onChange={(e) => setTerms(e.target.checked)} required />
-                            <span className="checkmark">
-                                <IoCheckmarkSharp size="23px" color="#ffffff" />
-                            </span>
-                            <span>I accept the </span>
-                            <p>Terms and Conditions</p>
-                        </label>                
+                            <label className="form-group-terms" htmlFor="terms">
+                                <input type="checkbox" id="terms" name="terms" checked={terms} onChange={(e) => setTerms(e.target.checked)} required />
+                                <span className="checkmark">
+                                    <IoCheckmarkSharp size="23px" color="#ffffff" />
+                                </span>
+                                <span>I accept the </span>
+                                <p>Terms and Conditions</p>
+                            </label>                
 
-                        <button type="submit" className="btn-submit">Confirm Booking</button>
-                    </form>            
-                {/* </div> */}
+                            <button type="submit" className="btn-submit">Confirm Booking</button>
+                        </form>            
+                    </div>
                 </>
             )}
     </dialog>

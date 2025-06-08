@@ -7,7 +7,6 @@ import { useAuth } from '../../AuthProvider';
 
 const Header = () => {
     const accountApiUrl = import.meta.env.VITE_ACCOUNT_API_URL;
-    const authApiUrl = import.meta.env.VITE_AUTH_API_URL;
 
     const { isLoggedIn, user } = useAuth();
 
@@ -37,7 +36,7 @@ const Header = () => {
                 <BsSearch size="20" color="#37437D"/>
             </button>
         </div>
-        {isLoggedIn && (
+        {isLoggedIn && user &&(
             <div className="user-container">
                 <button type="button" className="btn-notification">
                     <PiBell size="22" color="#FFFFFF" />

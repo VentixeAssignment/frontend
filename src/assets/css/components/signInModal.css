@@ -12,6 +12,11 @@
         align-items: center;        
     }
 
+    .success {
+        color: var(--primary-100);
+        font-weight: var(--font-semibold);
+    }
+
     .signin-form {
         width: 100%;
         display: flex;

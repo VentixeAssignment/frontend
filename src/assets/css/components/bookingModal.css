@@ -1,17 +1,7 @@
 dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.5);    
 }
-.btn-submit,
-.btn-return {
-        background-color: var(--btn-standard-bg);
-        color: var(--btn-standard-text-color);
-        font-weight: var(--font-semibold);
-        margin-top: 1rem;
 
-        &:hover {
-            background-color: var(--btn-standard-bg-hover);
-        }
-    }
 
 dialog.modal p {
     font-size: 14px;
@@ -25,11 +15,6 @@ dialog.modal span {
     color: var(--grey-90);
     font-weight: var(--font-regular);
     display: flex;
-}
-
-.event-date {
-    margin-left: .5rem;
-    margin-top: .8rem;
 }
     
 .header-modal {
@@ -58,11 +43,13 @@ dialog.modal span {
         }   
 }
     
-.price-details {
+.modal-price-details {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
 
     .price-per-ticket,
     .tickets,

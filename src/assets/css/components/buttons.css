@@ -20,6 +20,23 @@
     }
 }
 
+.btn-booking {
+    width: fit-content;
+    height: 46px;
+    grid-area: btn;
+    border-radius: 14px;
+    border: none;
+    background-color: var(--btn-standard-bg);
+    padding: 1rem 2rem;
+    color: var(--btn-standard-text-color);
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+
+    &:hover {
+        background-color: var(--btn-standard-bg-hover);
+    }
+}
+
 .btn-signout,
 .btn-signin,
 .btn-signup-submit,
@@ -66,3 +83,15 @@
         color: var(--secondary-60);
     }
 }
+
+.btn-submit,
+.btn-return {
+        background-color: var(--btn-standard-bg);
+        color: var(--btn-standard-text-color);
+        font-weight: var(--font-semibold);
+        margin-top: 1rem;
+
+        &:hover {
+            background-color: var(--btn-standard-bg-hover);
+        }
+    }
