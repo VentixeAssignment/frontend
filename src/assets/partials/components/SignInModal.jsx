@@ -12,9 +12,9 @@ const SignInModal = ({ dialogRef }) => {
     
     const { setIsLoggedIn } = useAuth();
 
-    const [isSignedUp, setIsSignedUp] = useState(true);
-    // const [isCreatedAccount, setIsCreatedAccount] = useState(false);
-    // const [verified, setVerified] = useState(false);
+    const [isSignUp, setIsSignUp] = useState(false);
+    const [accountCreated, setAccountCreated] = useState(false);
+    const [verified, setVerified] = useState(true);
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
@@ -225,9 +225,10 @@ const SignInModal = ({ dialogRef }) => {
         .then(data => {
             // console.log(typeof data.success, data.success);
             if (data.success) {
-                setIsSignedUp(true);
-                // setVerified(true);
-                // setVerification({...verification, email: form.email });
+                setIsSignUp(true);
+                setAccountCreated(true);
+                setVerified(false);
+                setVerification({...verification, email: form.email });
                 setForm({
                     firstName: "",
                     lastName: "",
@@ -268,49 +269,49 @@ const SignInModal = ({ dialogRef }) => {
     }
 
 // Verify account after sign up
-    // const handleVerifyAccount = (e) => {
-    //     e.preventDefault();
+    const handleVerifyAccount = (e) => {
+        e.preventDefault();
 
-    //     const { email, verificationCode } = verification;
-    //     if (!verificationCode) {
-    //         alert("Please enter the verification code.");
-    //         return;
-    //     }
+        const { email, verificationCode } = verification;
+        if (!verificationCode) {
+            alert("Please enter the verification code.");
+            return;
+        }
 
-    //     fetch(`${accountApiUrl}/api/account/verify`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({ email, verificationCode })
-    //     })
-    //     .then(async response => {
-    //         const data = await response.json()
+        fetch(`${accountApiUrl}/api/account/verify`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, verificationCode })
+        })
+        .then(async response => {
+            const data = await response.json()
 
-    //         console.log("Response received:", data);
-    //         if (!response.ok) {
-    //             console.error("Response not ok:", data);
-    //             alert(data.message || "Verification failed.");
-    //             return;
-    //         }
-    //         return data;
-    //     })
-    //     .then(data => {
-    //         if (data.success) {                
-    //             setVerified(false);
-    //             setIsSignedUp(true);
-    //             setVerification({...verification, email: form.email });
-    //         } else {
-    //             alert(data.message || "Verification failed. Please try again.");
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error("Error during verification:", error);
-    //         alert("An error occurred. Please try again later.");
-    //         setVerification({ email: "", verificationCode: "" });
-    //         dialogRef?.current?.close();
-    //     });
-    // };
+            console.log("Response received:", data);
+            if (!response.ok) {
+                console.error("Response not ok:", data);
+                alert(data.message || "Verification failed.");
+                return;
+            }
+            return data;
+        })
+        .then(data => {
+            if (data.success) {                
+                setVerified(false);
+                setIsSignUp(true);
+                setVerification({...verification, email: form.email });
+            } else {
+                alert(data.message || "Verification failed. Please try again.");
+            }
+        })
+        .catch(error => {
+            console.error("Error during verification:", error);
+            alert("An error occurred. Please try again later.");
+            setVerification({ email: "", verificationCode: "" });
+            dialogRef?.current?.close();
+        });
+    };
 
 
     const handleClose = () => {
@@ -322,14 +323,14 @@ const SignInModal = ({ dialogRef }) => {
         <dialog ref={dialogRef} className="modal">
             <div className="modal-content">
                 <div className="header-modal">
-                    <h2>{!isSignedUp 
+                    {/* <h2>{!isSignUp 
                         ? "Sign Up" : "Sign In"}
-                    </h2>
-                    {/* <h2>{verified 
-                        ? "Verify Account" 
-                        : !isSignedUp 
-                            ? "Sign Up" : "Sign In"}
                     </h2> */}
+                    <h2>{!verified
+                        ? "Verify Account" 
+                        : isSignUp 
+                            ? "Sign Up" : "Sign In"}
+                    </h2>
                     <button className="btn-close" onClick={handleClose}>
                         <FaXmark size="20px" color="#ffffff" />
                     </button>
@@ -338,10 +339,10 @@ const SignInModal = ({ dialogRef }) => {
 
 
 
-                    <form className="form" onSubmit={!isSignedUp ? handleSignUp : handleSignIn} noValidate>
+                    {/* <form className="form" onSubmit={!isSignUp ? handleSignUp : handleSignIn} noValidate> */}
 
-                    {/* <form className="form" onSubmit={verified ? handleVerifyAccount : !isSignedUp ? handleSignUp : handleSignIn} noValidate> */}
-                        {isSignedUp 
+                    <form className="form" onSubmit={!verified ? handleVerifyAccount : isSignUp ? handleSignUp : handleSignIn} noValidate>
+                        {!isSignUp 
                             ? (                                
                                 <>
                                     <div className="form-group">
@@ -360,9 +361,9 @@ const SignInModal = ({ dialogRef }) => {
                             )
                             : (
                                 <>
-                                    {/* { !verified 
+                                    { verified && !accountCreated 
                                     ? (
-                                        <> */}
+                                        <> 
                                             <div className="form-group-multi">
                                                 <div className="form-group">
                                                     <label htmlFor="firstName">First Name</label>
@@ -462,8 +463,8 @@ const SignInModal = ({ dialogRef }) => {
                                                 <span>I accept the </span>
                                                 <p>Terms and Conditions</p>
                                             </label>
-                                            <button type="submit" className="btn-signup-submit" onClick={() => setIsSignedUp(false)}>Sign Up</button>
-                                        {/* </> 
+                                            <button type="submit" className="btn-signup-submit" onClick={() => setAccountCreated(true)}>Sign Up</button>
+                                        </> 
                                     ):(
                                         <>
                                             <p className="success">Account successfully created!</p>
@@ -472,27 +473,27 @@ const SignInModal = ({ dialogRef }) => {
                                                 <input type="text" id="verificationCode" value={verification.verificationCode} name="verificationCode" className="input"
                                                     onChange={(e) => setVerification({...verification, verificationCode: e.target.value})} required />
                                             </div>
-                                            <button type="submit" className="btn-signin-submit" onClick={() => setIsSignedUp(false)}>Verify</button>
+                                            <button type="submit" className="btn-signin-submit" onClick={() => setIsSignUp(false)}>Verify</button>
                                         </>
-                                    )} */}
+                                    )} 
                                 </>
                             )}
                     </form>
                 </div>
 
-                <small>Don't have an account? 
-                    <button type="button" className="btn-signup" onClick={() => isSignedUp ? setIsSignedUp(false) : setIsSignedUp(true)}>
-                        {!isSignedUp ? "Sign In" : "Sign Up"}
+                {/* <small>Don't have an account? 
+                    <button type="button" className="btn-signup" onClick={() => isSignUp ? setisSignUp(false) : setisSignUp(true)}>
+                        {!isSignUp ? "Sign In" : "Sign Up"}
                     </button>
-                </small>    
+                </small>     */}
                 
-                {/* {!verified && (
+                {verified && !isSignUp && (
                     <small>Don't have an account? 
-                        <button type="button" className="btn-signup" onClick={() => isSignedUp ? setIsSignedUp(false) : setIsSignedUp(true)}>
-                            {isSignedUp ? "Sign In" : "Sign Up"}
+                        <button type="button" className="btn-signup" onClick={() => isSignUp ? setIsSignUp(false) : setIsSignUp(true)}>
+                            {isSignUp ? "Sign In" : "Sign Up"}
                         </button>
                     </small>    
-                )} */}
+                )}
             </div>
         </dialog>
     </>
