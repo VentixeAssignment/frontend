@@ -482,7 +482,7 @@ const SignInModal = ({ dialogRef }) => {
 
                 <small>Don't have an account? 
                     <button type="button" className="btn-signup" onClick={() => isSignedUp ? setIsSignedUp(false) : setIsSignedUp(true)}>
-                        {isSignedUp ? "Sign In" : "Sign Up"}
+                        {!isSignedUp ? "Sign In" : "Sign Up"}
                     </button>
                 </small>    
                 
