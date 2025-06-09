@@ -12,8 +12,9 @@ const SignInModal = ({ dialogRef }) => {
     
     const { setIsLoggedIn } = useAuth();
 
-    const [isSignUp, setIsSignUp] = useState(false);
-    const [isCreatedAccount, setIsCreatedAccount] = useState(false);
+    const [isSignedUp, setIsSignedUp] = useState(true);
+    // const [isCreatedAccount, setIsCreatedAccount] = useState(false);
+    // const [verified, setVerified] = useState(false);
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
@@ -27,6 +28,10 @@ const SignInModal = ({ dialogRef }) => {
         password: "",
         confirmPassword: "",
         termsAndConditions: false
+    });
+    const [verification, setVerification] = useState({
+        email: "",
+        verificationCode: ""
     });
 
     const [year, setYear] = useState("");
@@ -108,6 +113,7 @@ const SignInModal = ({ dialogRef }) => {
         })
         .then(response => response.json())
         .then(data => {
+            console.log(typeof data.success, data.success);
             if (data.success) {
                 if(data.token) {
                     localStorage.setItem("authToken", data.token);
@@ -154,7 +160,6 @@ const SignInModal = ({ dialogRef }) => {
             dialogRef?.current?.close();
         });
     }
-
 
 // Handles the sign up submit
     const handleSignUp = (e) => {
@@ -220,8 +225,9 @@ const SignInModal = ({ dialogRef }) => {
         .then(data => {
             // console.log(typeof data.success, data.success);
             if (data.success) {
-                setIsSignUp(false);
-                setIsCreatedAccount(true);
+                setIsSignedUp(true);
+                // setVerified(true);
+                // setVerification({...verification, email: form.email });
                 setForm({
                     firstName: "",
                     lastName: "",
@@ -261,8 +267,53 @@ const SignInModal = ({ dialogRef }) => {
         });
     }
 
+// Verify account after sign up
+    // const handleVerifyAccount = (e) => {
+    //     e.preventDefault();
+
+    //     const { email, verificationCode } = verification;
+    //     if (!verificationCode) {
+    //         alert("Please enter the verification code.");
+    //         return;
+    //     }
+
+    //     fetch(`${accountApiUrl}/api/account/verify`, {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({ email, verificationCode })
+    //     })
+    //     .then(async response => {
+    //         const data = await response.json()
+
+    //         console.log("Response received:", data);
+    //         if (!response.ok) {
+    //             console.error("Response not ok:", data);
+    //             alert(data.message || "Verification failed.");
+    //             return;
+    //         }
+    //         return data;
+    //     })
+    //     .then(data => {
+    //         if (data.success) {                
+    //             setVerified(false);
+    //             setIsSignedUp(true);
+    //             setVerification({...verification, email: form.email });
+    //         } else {
+    //             alert(data.message || "Verification failed. Please try again.");
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error("Error during verification:", error);
+    //         alert("An error occurred. Please try again later.");
+    //         setVerification({ email: "", verificationCode: "" });
+    //         dialogRef?.current?.close();
+    //     });
+    // };
+
+
     const handleClose = () => {
-        setIsCreatedAccount(false);
         dialogRef?.current?.close();
     };
 
@@ -271,18 +322,27 @@ const SignInModal = ({ dialogRef }) => {
         <dialog ref={dialogRef} className="modal">
             <div className="modal-content">
                 <div className="header-modal">
-                    <h2>{isSignUp ? "Sign Up" : "Sign In"}</h2>
+                    <h2>{!isSignedUp 
+                        ? "Sign Up" : "Sign In"}
+                    </h2>
+                    {/* <h2>{verified 
+                        ? "Verify Account" 
+                        : !isSignedUp 
+                            ? "Sign Up" : "Sign In"}
+                    </h2> */}
                     <button className="btn-close" onClick={handleClose}>
                         <FaXmark size="20px" color="#ffffff" />
                     </button>
                 </div>
-                {isCreatedAccount && (
-                    <p className="success">Account successfully created!</p>
-                )}
                 <div className="modal-form">
-                    <form className="form" onSubmit={isSignUp ? handleSignUp : handleSignIn} noValidate>
-                        {!isSignUp 
-                            ? (
+
+
+
+                    <form className="form" onSubmit={!isSignedUp ? handleSignUp : handleSignIn} noValidate>
+
+                    {/* <form className="form" onSubmit={verified ? handleVerifyAccount : !isSignedUp ? handleSignUp : handleSignIn} noValidate> */}
+                        {isSignedUp 
+                            ? (                                
                                 <>
                                     <div className="form-group">
                                         <label htmlFor="userName">Email</label>
@@ -294,122 +354,145 @@ const SignInModal = ({ dialogRef }) => {
                                         <input type="password" id="password" value={form.password} name="password" className="input" 
                                             onChange={(e) => setForm({...form, password: e.target.value})}required />
                                     </div>
-                                    <button type="submit" className="btn-signin-submit" onClick={() => setIsCreatedAccount(false)}>Sign In</button>
+                                    <button type="submit" className="btn-signin-submit">Sign In</button>
+                                
                                 </>
                             )
                             : (
                                 <>
-                                    <div className="form-group-multi">
-                                        <div className="form-group">
-                                            <label htmlFor="firstName">First Name</label>
-                                            <input type="text" value={form.firstName}id="firstName" name="firstName" className="input" 
-                                                onChange={(e) => setForm({...form, firstName: e.target.value})}required />
-                                        </div>
+                                    {/* { !verified 
+                                    ? (
+                                        <> */}
+                                            <div className="form-group-multi">
+                                                <div className="form-group">
+                                                    <label htmlFor="firstName">First Name</label>
+                                                    <input type="text" value={form.firstName}id="firstName" name="firstName" className="input" 
+                                                        onChange={(e) => setForm({...form, firstName: e.target.value})}required />
+                                                </div>
 
-                                        <div className="form-group">
-                                            <label htmlFor="lastName">Last Name</label>
-                                            <input type="text" value={form.lastName} id="lastName" name="lastName" className="input" 
-                                                onChange={(e) => setForm({...form, lastName: e.target.value})}required />
-                                        </div>
-                                    </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="lastName">Last Name</label>
+                                                    <input type="text" value={form.lastName} id="lastName" name="lastName" className="input" 
+                                                        onChange={(e) => setForm({...form, lastName: e.target.value})}required />
+                                                </div>
+                                            </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="email">Email</label>
-                                        <input type="email" value={form.email} id="email" name="email" className="input" 
-                                            onChange={(e) => setForm({...form, email: e.target.value})}required />
-                                    </div>
+                                            <div className="form-group">
+                                                <label htmlFor="email">Email</label>
+                                                <input type="email" value={form.email} id="email" name="email" className="input" 
+                                                    onChange={(e) => setForm({...form, email: e.target.value})}required />
+                                            </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="phoneNumber">Phone Number</label>
-                                        <input type="text" value={form.phoneNumber} id="phoneNumber" name="phoneNumber" className="input" 
-                                            onChange={(e) => setForm({...form, phoneNumber: e.target.value})} required />
-                                    </div>
+                                            <div className="form-group">
+                                                <label htmlFor="phoneNumber">Phone Number</label>
+                                                <input type="text" value={form.phoneNumber} id="phoneNumber" name="phoneNumber" className="input" 
+                                                    onChange={(e) => setForm({...form, phoneNumber: e.target.value})} required />
+                                            </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="streetAddress">Street Address</label>
-                                        <input type="text" value={form.streetAddress} id="streetAddress" name="streetAddress" className="input"
-                                            onChange={(e) => setForm({...form, streetAddress: e.target.value})} required />
-                                    </div>
+                                            <div className="form-group">
+                                                <label htmlFor="streetAddress">Street Address</label>
+                                                <input type="text" value={form.streetAddress} id="streetAddress" name="streetAddress" className="input"
+                                                    onChange={(e) => setForm({...form, streetAddress: e.target.value})} required />
+                                            </div>
 
-                                    <div className="form-group-multi">
-                                        <div className="form-group">
-                                            <label htmlFor="postalCode">Postal Code</label>
-                                            <input type="text" value={form.postalCode} id="postalCode" name="postalCode" className="input"
-                                                onChange={(e) => setForm({...form, postalCode: e.target.value})} required />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="city">City</label>
-                                            <input type="text" value={form.city} id="city" name="city" className="input" 
-                                                onChange={(e) => setForm({...form, city: e.target.value})} required />
-                                        </div>
-                                    </div>
+                                            <div className="form-group-multi">
+                                                <div className="form-group">
+                                                    <label htmlFor="postalCode">Postal Code</label>
+                                                    <input type="text" value={form.postalCode} id="postalCode" name="postalCode" className="input"
+                                                        onChange={(e) => setForm({...form, postalCode: e.target.value})} required />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="city">City</label>
+                                                    <input type="text" value={form.city} id="city" name="city" className="input" 
+                                                        onChange={(e) => setForm({...form, city: e.target.value})} required />
+                                                </div>
+                                            </div>
 
-                                    <div className="form-group-multi">
-                                        <div className="form-group">
-                                            <label htmlFor="year">Birth Year</label>
-                                            <select id="year" name="year" className="input" value={year} onChange={(e) => setYear(e.target.value)} required>
-                                                <option value="">Year</option>
-                                                {years.map((year) => (
-                                                    <option key={year} value={year}>{year}</option>
-                                                ))}
-                                            </select>
-                                        </div>
+                                            <div className="form-group-multi">
+                                                <div className="form-group">
+                                                    <label htmlFor="year">Birth Year</label>
+                                                    <select id="year" name="year" className="input" value={year} onChange={(e) => setYear(e.target.value)} required>
+                                                        <option value="">Year</option>
+                                                        {years.map((year) => (
+                                                            <option key={year} value={year}>{year}</option>
+                                                        ))}
+                                                    </select>
+                                                </div>
 
-                                        <div className="form-group">
-                                            <label htmlFor="month">Birth Month</label>
-                                            <select id="month" name="month" className="input" value={month} onChange={(e) => setMonth(e.target.value)} required>
-                                                <option value="">Month</option>
-                                                {monthNames.map((month) => (
-                                                    <option key={month.value} value={month.value}>{month.name}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                       
-                                        <div className="form-group">
-                                            <label htmlFor="day">Birth Day</label>
-                                            <select id="day" name="day" className="input" value={day} onChange={(e) => setDay(e.target.value)} required>
-                                                <option value="">Day</option>
-                                                {daysInMonth.map((day) => (
-                                                    <option key={day} value={day}>{String(day).padStart(2, "0")}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="month">Birth Month</label>
+                                                    <select id="month" name="month" className="input" value={month} onChange={(e) => setMonth(e.target.value)} required>
+                                                        <option value="">Month</option>
+                                                        {monthNames.map((month) => (
+                                                            <option key={month.value} value={month.value}>{month.name}</option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                            
+                                                <div className="form-group">
+                                                    <label htmlFor="day">Birth Day</label>
+                                                    <select id="day" name="day" className="input" value={day} onChange={(e) => setDay(e.target.value)} required>
+                                                        <option value="">Day</option>
+                                                        {daysInMonth.map((day) => (
+                                                            <option key={day} value={day}>{String(day).padStart(2, "0")}</option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                                    <div className="form-group-multi">
-                                        <div className="form-group">
-                                            <label htmlFor="password">Password</label>
-                                            <input type="password" value={form.password} id="password" name="password" className="input" 
-                                                onChange={(e) => setForm({...form, password: e.target.value})} required />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="confirmPassword">Confirm Password</label>
-                                            <input type="password" value={form.confirmPassword} id="confirmPassword" name="confirmPassword" className="input" 
-                                                onChange={(e) => setForm({...form, confirmPassword: e.target.value})} required />
-                                        </div>
-                                    </div>                                                
+                                            <div className="form-group-multi">
+                                                <div className="form-group">
+                                                    <label htmlFor="password">Password</label>
+                                                    <input type="password" value={form.password} id="password" name="password" className="input" 
+                                                        onChange={(e) => setForm({...form, password: e.target.value})} required />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="confirmPassword">Confirm Password</label>
+                                                    <input type="password" value={form.confirmPassword} id="confirmPassword" name="confirmPassword" className="input" 
+                                                        onChange={(e) => setForm({...form, confirmPassword: e.target.value})} required />
+                                                </div>
+                                            </div>                                                
 
-                                    <label className="form-group-terms" htmlFor="terms">
-                                        <input type="checkbox" id="terms" name="terms" checked={form.termsAndConditions} 
-                                            onChange={(e) => setForm({...form, termsAndConditions: e.target.checked})} required />
-                                        <span className="checkmark">
-                                            <IoCheckmarkSharp size="23px" color="#ffffff" />
-                                        </span>
-                                        <span>I accept the </span>
-                                        <p>Terms and Conditions</p>
-                                    </label>
-
-                                    <button type="submit" className="btn-signup-submit" onClick={() => setIsCreatedAccount(false)}>Sign Up</button>
+                                            <label className="form-group-terms" htmlFor="terms">
+                                                <input type="checkbox" id="terms" name="terms" checked={form.termsAndConditions} 
+                                                    onChange={(e) => setForm({...form, termsAndConditions: e.target.checked})} required />
+                                                <span className="checkmark">
+                                                    <IoCheckmarkSharp size="23px" color="#ffffff" />
+                                                </span>
+                                                <span>I accept the </span>
+                                                <p>Terms and Conditions</p>
+                                            </label>
+                                            <button type="submit" className="btn-signup-submit" onClick={() => setIsSignedUp(false)}>Sign Up</button>
+                                        {/* </> 
+                                    ):(
+                                        <>
+                                            <p className="success">Account successfully created!</p>
+                                            <div className="form-group">
+                                                <label htmlFor="verificationCode">Verification Code</label>
+                                                <input type="text" id="verificationCode" value={verification.verificationCode} name="verificationCode" className="input"
+                                                    onChange={(e) => setVerification({...verification, verificationCode: e.target.value})} required />
+                                            </div>
+                                            <button type="submit" className="btn-signin-submit" onClick={() => setIsSignedUp(false)}>Verify</button>
+                                        </>
+                                    )} */}
                                 </>
                             )}
                     </form>
                 </div>
-                
+
                 <small>Don't have an account? 
-                    <button type="button" className="btn-signup" onClick={() => isSignUp ? setIsSignUp(false) : setIsSignUp(true)}>
-                        {isSignUp ? "Sign In" : "Sign Up"}
+                    <button type="button" className="btn-signup" onClick={() => isSignedUp ? setIsSignedUp(false) : setIsSignedUp(true)}>
+                        {isSignedUp ? "Sign In" : "Sign Up"}
                     </button>
-                </small>
+                </small>    
+                
+                {/* {!verified && (
+                    <small>Don't have an account? 
+                        <button type="button" className="btn-signup" onClick={() => isSignedUp ? setIsSignedUp(false) : setIsSignedUp(true)}>
+                            {isSignedUp ? "Sign In" : "Sign Up"}
+                        </button>
+                    </small>    
+                )} */}
             </div>
         </dialog>
     </>

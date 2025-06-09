@@ -87,12 +87,16 @@ const BookingModal = ({isOpen, onClose, eventId, eventName, eventPrice, eventIma
         isOpen = false;
     } 
 
+
+
     const bookEvent = async (booking) => {
         try {
             console.log("Booking event before post:", booking);
+
             const response =  await fetch(`${apiUrl}/api/bookings/create`, {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(booking)
