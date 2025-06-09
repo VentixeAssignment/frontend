@@ -11,10 +11,11 @@ const SignInModal = ({ dialogRef }) => {
     const authApiUrl = import.meta.env.VITE_AUTH_API_URL;
     
     const { setIsLoggedIn } = useAuth();
+    
+    // AuthStep is used to determine which step of the authentication process we are in instead of using multiple booleans. 
+    // Suggested by ChatGPT.
+    const [authStep, setAuthStep] = useState("signin");
 
-    const [isSignedUp, setIsSignedUp] = useState(true);
-    // const [isCreatedAccount, setIsCreatedAccount] = useState(false);
-    // const [verified, setVerified] = useState(false);
     const [form, setForm] = useState({
         firstName: "",
         lastName: "",
@@ -31,7 +32,7 @@ const SignInModal = ({ dialogRef }) => {
     });
     const [verification, setVerification] = useState({
         email: "",
-        verificationCode: ""
+        code: ""
     });
 
     const [year, setYear] = useState("");
@@ -164,6 +165,7 @@ const SignInModal = ({ dialogRef }) => {
 // Handles the sign up submit
     const handleSignUp = (e) => {
         e.preventDefault();
+        console.log("handleSignUp called with form:", form);
         const { 
             firstName, 
             lastName, 
@@ -225,9 +227,8 @@ const SignInModal = ({ dialogRef }) => {
         .then(data => {
             // console.log(typeof data.success, data.success);
             if (data.success) {
-                setIsSignedUp(true);
-                // setVerified(true);
-                // setVerification({...verification, email: form.email });
+                setAuthStep("verify");
+                setVerification({ email, code: "" });
                 setForm({
                     firstName: "",
                     lastName: "",
@@ -268,49 +269,49 @@ const SignInModal = ({ dialogRef }) => {
     }
 
 // Verify account after sign up
-    // const handleVerifyAccount = (e) => {
-    //     e.preventDefault();
+    const handleVerifyAccount = (e) => {
+        e.preventDefault();
+        console.log("handleVerifyAccount called with verification:", verification);
 
-    //     const { email, verificationCode } = verification;
-    //     if (!verificationCode) {
-    //         alert("Please enter the verification code.");
-    //         return;
-    //     }
+        const { email, code } = verification;
+        if (!code) {
+            alert("Please enter the verification code.");
+            return;
+        }
 
-    //     fetch(`${accountApiUrl}/api/account/verify`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({ email, verificationCode })
-    //     })
-    //     .then(async response => {
-    //         const data = await response.json()
+        fetch(`${accountApiUrl}/api/account/verify`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, code })
+        })
+        .then(async response => {
+            const data = await response.json()
 
-    //         console.log("Response received:", data);
-    //         if (!response.ok) {
-    //             console.error("Response not ok:", data);
-    //             alert(data.message || "Verification failed.");
-    //             return;
-    //         }
-    //         return data;
-    //     })
-    //     .then(data => {
-    //         if (data.success) {                
-    //             setVerified(false);
-    //             setIsSignedUp(true);
-    //             setVerification({...verification, email: form.email });
-    //         } else {
-    //             alert(data.message || "Verification failed. Please try again.");
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error("Error during verification:", error);
-    //         alert("An error occurred. Please try again later.");
-    //         setVerification({ email: "", verificationCode: "" });
-    //         dialogRef?.current?.close();
-    //     });
-    // };
+            console.log("Response received:", data);
+            if (!response.ok) {
+                console.error("Response not ok:", data);
+                alert(data.message || "Verification failed.");
+                return;
+            }
+            return data;
+        })
+        .then(data => {
+            if (data.success) {  
+                setAuthStep("signin");
+                alert("Account successfully verified! You can now sign in.");
+            } else {
+                alert(data.message || "Verification failed. Please try again.");
+            }
+        })
+        .catch(error => {
+            console.error("Error during verification:", error);
+            alert("An error occurred. Please try again later.");
+            setVerification({ email: "", code: "" });
+            dialogRef?.current?.close();
+        });
+    };
 
 
     const handleClose = () => {
@@ -322,14 +323,11 @@ const SignInModal = ({ dialogRef }) => {
         <dialog ref={dialogRef} className="modal">
             <div className="modal-content">
                 <div className="header-modal">
-                    <h2>{!isSignedUp 
-                        ? "Sign Up" : "Sign In"}
+                    <h2>
+                        {authStep === "signin" ? "Sign In" 
+                            : authStep === "signup" ? "Sign Up" 
+                            : "Verify Account"}
                     </h2>
-                    {/* <h2>{verified 
-                        ? "Verify Account" 
-                        : !isSignedUp 
-                            ? "Sign Up" : "Sign In"}
-                    </h2> */}
                     <button className="btn-close" onClick={handleClose}>
                         <FaXmark size="20px" color="#ffffff" />
                     </button>
@@ -338,10 +336,14 @@ const SignInModal = ({ dialogRef }) => {
 
 
 
-                    <form className="form" onSubmit={!isSignedUp ? handleSignUp : handleSignIn} noValidate>
+                    {/* <form className="form" onSubmit={!isSignUp ? handleSignUp : handleSignIn} noValidate> */}
 
-                    {/* <form className="form" onSubmit={verified ? handleVerifyAccount : !isSignedUp ? handleSignUp : handleSignIn} noValidate> */}
-                        {isSignedUp 
+                    <form className="form" onSubmit={
+                        authStep === "signin" ? handleSignIn
+                        : authStep === "signup" ? handleSignUp
+                        : handleVerifyAccount}
+                     noValidate>
+                        {authStep === "signin" 
                             ? (                                
                                 <>
                                     <div className="form-group">
@@ -358,141 +360,135 @@ const SignInModal = ({ dialogRef }) => {
                                 
                                 </>
                             )
-                            : (
+                            : authStep === "signup" ? (
+                                <> 
+                                    <div className="form-group-multi">
+                                        <div className="form-group">
+                                            <label htmlFor="firstName">First Name</label>
+                                            <input type="text" value={form.firstName}id="firstName" name="firstName" className="input" 
+                                                onChange={(e) => setForm({...form, firstName: e.target.value})}required />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="lastName">Last Name</label>
+                                            <input type="text" value={form.lastName} id="lastName" name="lastName" className="input" 
+                                                onChange={(e) => setForm({...form, lastName: e.target.value})}required />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="email">Email</label>
+                                        <input type="email" value={form.email} id="email" name="email" className="input" 
+                                            onChange={(e) => setForm({...form, email: e.target.value})}required />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="phoneNumber">Phone Number</label>
+                                        <input type="text" value={form.phoneNumber} id="phoneNumber" name="phoneNumber" className="input" 
+                                            onChange={(e) => setForm({...form, phoneNumber: e.target.value})} required />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="streetAddress">Street Address</label>
+                                        <input type="text" value={form.streetAddress} id="streetAddress" name="streetAddress" className="input"
+                                            onChange={(e) => setForm({...form, streetAddress: e.target.value})} required />
+                                    </div>
+
+                                    <div className="form-group-multi">
+                                        <div className="form-group">
+                                            <label htmlFor="postalCode">Postal Code</label>
+                                            <input type="text" value={form.postalCode} id="postalCode" name="postalCode" className="input"
+                                                onChange={(e) => setForm({...form, postalCode: e.target.value})} required />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="city">City</label>
+                                            <input type="text" value={form.city} id="city" name="city" className="input" 
+                                                onChange={(e) => setForm({...form, city: e.target.value})} required />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group-multi">
+                                        <div className="form-group">
+                                            <label htmlFor="year">Birth Year</label>
+                                            <select id="year" name="year" className="input" value={year} onChange={(e) => setYear(e.target.value)} required>
+                                                <option value="">Year</option>
+                                                {years.map((year) => (
+                                                    <option key={year} value={year}>{year}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="month">Birth Month</label>
+                                            <select id="month" name="month" className="input" value={month} onChange={(e) => setMonth(e.target.value)} required>
+                                                <option value="">Month</option>
+                                                {monthNames.map((month) => (
+                                                    <option key={month.value} value={month.value}>{month.name}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    
+                                        <div className="form-group">
+                                            <label htmlFor="day">Birth Day</label>
+                                            <select id="day" name="day" className="input" value={day} onChange={(e) => setDay(e.target.value)} required>
+                                                <option value="">Day</option>
+                                                {daysInMonth.map((day) => (
+                                                    <option key={day} value={day}>{String(day).padStart(2, "0")}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group-multi">
+                                        <div className="form-group">
+                                            <label htmlFor="password">Password</label>
+                                            <input type="password" value={form.password} id="password" name="password" className="input" 
+                                                onChange={(e) => setForm({...form, password: e.target.value})} required />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="confirmPassword">Confirm Password</label>
+                                            <input type="password" value={form.confirmPassword} id="confirmPassword" name="confirmPassword" className="input" 
+                                                onChange={(e) => setForm({...form, confirmPassword: e.target.value})} required />
+                                        </div>
+                                    </div>                                                
+
+                                    <label className="form-group-terms" htmlFor="terms">
+                                        <input type="checkbox" id="terms" name="terms" checked={form.termsAndConditions} 
+                                            onChange={(e) => setForm({...form, termsAndConditions: e.target.checked})} required />
+                                        <span className="checkmark">
+                                            <IoCheckmarkSharp size="23px" color="#ffffff" />
+                                        </span>
+                                        <span>I accept the </span>
+                                        <p>Terms and Conditions</p>
+                                    </label>
+                                    <button type="submit" className="btn-signup-submit">Sign Up</button>
+                                </> 
+                            )
+                            : authStep === "verify" && (
                                 <>
-                                    {/* { !verified 
-                                    ? (
-                                        <> */}
-                                            <div className="form-group-multi">
-                                                <div className="form-group">
-                                                    <label htmlFor="firstName">First Name</label>
-                                                    <input type="text" value={form.firstName}id="firstName" name="firstName" className="input" 
-                                                        onChange={(e) => setForm({...form, firstName: e.target.value})}required />
-                                                </div>
-
-                                                <div className="form-group">
-                                                    <label htmlFor="lastName">Last Name</label>
-                                                    <input type="text" value={form.lastName} id="lastName" name="lastName" className="input" 
-                                                        onChange={(e) => setForm({...form, lastName: e.target.value})}required />
-                                                </div>
-                                            </div>
-
-                                            <div className="form-group">
-                                                <label htmlFor="email">Email</label>
-                                                <input type="email" value={form.email} id="email" name="email" className="input" 
-                                                    onChange={(e) => setForm({...form, email: e.target.value})}required />
-                                            </div>
-
-                                            <div className="form-group">
-                                                <label htmlFor="phoneNumber">Phone Number</label>
-                                                <input type="text" value={form.phoneNumber} id="phoneNumber" name="phoneNumber" className="input" 
-                                                    onChange={(e) => setForm({...form, phoneNumber: e.target.value})} required />
-                                            </div>
-
-                                            <div className="form-group">
-                                                <label htmlFor="streetAddress">Street Address</label>
-                                                <input type="text" value={form.streetAddress} id="streetAddress" name="streetAddress" className="input"
-                                                    onChange={(e) => setForm({...form, streetAddress: e.target.value})} required />
-                                            </div>
-
-                                            <div className="form-group-multi">
-                                                <div className="form-group">
-                                                    <label htmlFor="postalCode">Postal Code</label>
-                                                    <input type="text" value={form.postalCode} id="postalCode" name="postalCode" className="input"
-                                                        onChange={(e) => setForm({...form, postalCode: e.target.value})} required />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="city">City</label>
-                                                    <input type="text" value={form.city} id="city" name="city" className="input" 
-                                                        onChange={(e) => setForm({...form, city: e.target.value})} required />
-                                                </div>
-                                            </div>
-
-                                            <div className="form-group-multi">
-                                                <div className="form-group">
-                                                    <label htmlFor="year">Birth Year</label>
-                                                    <select id="year" name="year" className="input" value={year} onChange={(e) => setYear(e.target.value)} required>
-                                                        <option value="">Year</option>
-                                                        {years.map((year) => (
-                                                            <option key={year} value={year}>{year}</option>
-                                                        ))}
-                                                    </select>
-                                                </div>
-
-                                                <div className="form-group">
-                                                    <label htmlFor="month">Birth Month</label>
-                                                    <select id="month" name="month" className="input" value={month} onChange={(e) => setMonth(e.target.value)} required>
-                                                        <option value="">Month</option>
-                                                        {monthNames.map((month) => (
-                                                            <option key={month.value} value={month.value}>{month.name}</option>
-                                                        ))}
-                                                    </select>
-                                                </div>
-                                            
-                                                <div className="form-group">
-                                                    <label htmlFor="day">Birth Day</label>
-                                                    <select id="day" name="day" className="input" value={day} onChange={(e) => setDay(e.target.value)} required>
-                                                        <option value="">Day</option>
-                                                        {daysInMonth.map((day) => (
-                                                            <option key={day} value={day}>{String(day).padStart(2, "0")}</option>
-                                                        ))}
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div className="form-group-multi">
-                                                <div className="form-group">
-                                                    <label htmlFor="password">Password</label>
-                                                    <input type="password" value={form.password} id="password" name="password" className="input" 
-                                                        onChange={(e) => setForm({...form, password: e.target.value})} required />
-                                                </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="confirmPassword">Confirm Password</label>
-                                                    <input type="password" value={form.confirmPassword} id="confirmPassword" name="confirmPassword" className="input" 
-                                                        onChange={(e) => setForm({...form, confirmPassword: e.target.value})} required />
-                                                </div>
-                                            </div>                                                
-
-                                            <label className="form-group-terms" htmlFor="terms">
-                                                <input type="checkbox" id="terms" name="terms" checked={form.termsAndConditions} 
-                                                    onChange={(e) => setForm({...form, termsAndConditions: e.target.checked})} required />
-                                                <span className="checkmark">
-                                                    <IoCheckmarkSharp size="23px" color="#ffffff" />
-                                                </span>
-                                                <span>I accept the </span>
-                                                <p>Terms and Conditions</p>
-                                            </label>
-                                            <button type="submit" className="btn-signup-submit" onClick={() => setIsSignedUp(false)}>Sign Up</button>
-                                        {/* </> 
-                                    ):(
-                                        <>
-                                            <p className="success">Account successfully created!</p>
-                                            <div className="form-group">
-                                                <label htmlFor="verificationCode">Verification Code</label>
-                                                <input type="text" id="verificationCode" value={verification.verificationCode} name="verificationCode" className="input"
-                                                    onChange={(e) => setVerification({...verification, verificationCode: e.target.value})} required />
-                                            </div>
-                                            <button type="submit" className="btn-signin-submit" onClick={() => setIsSignedUp(false)}>Verify</button>
-                                        </>
-                                    )} */}
+                                    <p className="success">Account successfully created!</p>
+                                    <div className="form-group">
+                                        <label htmlFor="code">Verification Code</label>
+                                        <input type="text" id="code" value={verification.code} name="code" className="input"
+                                            onChange={(e) => setVerification({...verification, code: e.target.value})} required />
+                                    </div>
+                                    <button type="submit" className="btn-signin-submit">Verify</button>
                                 </>
-                            )}
+                            )
+                        }
                     </form>
                 </div>
-
-                <small>Don't have an account? 
-                    <button type="button" className="btn-signup" onClick={() => isSignedUp ? setIsSignedUp(false) : setIsSignedUp(true)}>
-                        {!isSignedUp ? "Sign In" : "Sign Up"}
-                    </button>
-                </small>    
                 
-                {/* {!verified && (
-                    <small>Don't have an account? 
-                        <button type="button" className="btn-signup" onClick={() => isSignedUp ? setIsSignedUp(false) : setIsSignedUp(true)}>
-                            {isSignedUp ? "Sign In" : "Sign Up"}
+                {(authStep === "signin" || authStep === "signup") && (
+                    <small>
+                        {authStep === "signin" ? "Don't have an account?" : "Already have an account?"} 
+                        <button type="button" className="btn-signup" 
+                            onClick={authStep === "signin" ? () => setAuthStep("signup") : () => setAuthStep("signin")}>
+                            
+                            {authStep === "signin" ? "Sign Up" : "Sign In"}
                         </button>
                     </small>    
-                )} */}
+                )}
             </div>
         </dialog>
     </>
